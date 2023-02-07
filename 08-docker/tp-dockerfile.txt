@@ -1,0 +1,27 @@
+Exercice 1 : 
+
+- docker pull jenkins/jenkins
+- docker run -p 8080:8080 --name=jenkins-master -d jenkins/jenkins
+- Aller sur localhost:8080
+- Entrer le mdp : b9de7ccc65c445bc95c5b4e97a02dd93 (peut être retrouvé dans les logs du docker hub)
+- docker stop jenkins-master
+
+
+Exercice 2 :
+
+- docker pull tomcat:latest
+wget https://updates.jenkins-ci.org/latest/jenkins.war
+
+- # utiliser l'image tomcat en tant que base
+FROM tomcat:latest
+
+# copier l'archive war de jenkins dans le répertoire webapps de tomcat
+COPY jenkins.war /usr/local/tomcat/webapps/
+
+# déclarer le port d'écoute 8080
+EXPOSE 8080
+
+- docker build -t jenkins-tomcat .
+
+- docker run -p 8080:8080 -d jenkins-tomcat
+curl http://localhost:8080/jenkins
